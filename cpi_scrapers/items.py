@@ -19,9 +19,9 @@ class ProductItem(Item):
     CG_PATHS_SEP = ' || '
 
     # Availability
-    # 'Discontinued', 'In Stock', 'In Store Only', 'Online Only', 'Out Of Stock', 'Available To Order', 'Pre Order'
-    NUM_AVAIL_OPTS = 7
-    AVAIL_DC, AVAIL_IS, AVAIL_ISO, AVAIL_OO, AVAIL_OOS, AVAIL_ATO, AVAIL_PO = range(1, NUM_AVAIL_OPTS+1) 
+    # 'Discontinued', 'In Stock', 'In Store Only', 'Out Of Stock', 'Available To Order', 'Pre Order'
+    NUM_AVAIL_OPTS = 6
+    AVAIL_DC, AVAIL_IS, AVAIL_ISO, AVAIL_OOS, AVAIL_ATO, AVAIL_PO = range(1, NUM_AVAIL_OPTS+1)
     
     # Product Condition
     # 'Damaged', 'New', 'Used', 'Refurbished'

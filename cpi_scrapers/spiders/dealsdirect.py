@@ -43,7 +43,6 @@ class DealsDirectSpider(CrawlSpider):
         'discontinued': ProductItem.AVAIL_DC,
         'instock': ProductItem.AVAIL_IS,
         'instoreonly': ProductItem.AVAIL_ISO,
-        'onlineonly': ProductItem.AVAIL_OO,
         'outofstock': ProductItem.AVAIL_OOS,
         'availabletoorder': ProductItem.AVAIL_ATO,
         'preorder': ProductItem.AVAIL_PO,
