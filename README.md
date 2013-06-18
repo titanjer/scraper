@@ -15,5 +15,6 @@ If you have any question, please contant to @Anfernee Chang
 
 ### Notes
 
-- Please add node's XPath in the spider class variable **_xpaths_** dict. We will use these information to check your spider.
+- Please add node's XPath in the spider class variable **'xpaths'** dict. We will use these information to check your spider.
 - Please raises ValueError if the page have no data for the XPath to any **Required Fields**.
+- To complete the job, we'd only be requiring the **spiders/store.py** file from you.
