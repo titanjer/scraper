@@ -44,6 +44,7 @@ class DealsDirectSpider(CrawlSpider):
         'instock': ProductItem.AVAIL_IS,
         'instoreonly': ProductItem.AVAIL_ISO,
         'outofstock': ProductItem.AVAIL_OOS,
+        'soldout': ProductItem.AVAIL_OOS,
         'availabletoorder': ProductItem.AVAIL_ATO,
         'preorder': ProductItem.AVAIL_PO,
         # }}}
@@ -168,9 +169,12 @@ class DealsDirectSpider(CrawlSpider):
         # Availability
         tmp = self.extract_xpath(hxs, 'parse_product_availability')
         if len(tmp) != 1:
-            raise ValueError('Wrong Availability')
+            raise ValueError('No Availability')
         else:
-            item['availability'] = self.AVAIL_CHOICES.get(re.sub('\s+', '', tmp[0].lower()), ProductItem.NIO)
+            tmp = self.AVAIL_CHOICES.get(re.sub('\s+', '', tmp[0].lower()))
+            if not tmp: 
+                raise ValueError('No such Availability')
+            item['availability'] = tmp
         
         # Sale Price 
         tmp = self.extract_xpath(hxs, 'parse_product_sale_price')
