@@ -8,7 +8,7 @@ from scrapy.item import Item, Field
 class ProductItem(Item):
     ''' ''' # {{{
     
-    ## Constant
+    ### Constant
     # {{{
 
     # Not In Options
@@ -30,7 +30,44 @@ class ProductItem(Item):
 
     # }}}
 
-    ### Required Fields
+    ### Validtions
+    # {{{
+    VALIDATION_LEN = {
+        # {{{
+        'source': 128,
+        'product_number': 128,
+        'product_name': 512,
+        'category_name': 512,
+        'product_url': 2048,
+        'image_url': 2048,
+        'currency': 32,
+        'manufacturer': 128,
+        'mpn': 128,
+        'product_sku': 128,
+    } # }}}
+
+    VALIDATION_REQUIRED = set((
+        # {{{
+        'source',
+        'product_number',
+        'product_name',
+        'description',
+        'category_name',
+        'product_url',
+        'image_url',
+        'product_condition',
+        'availability',
+        'sale_price',
+        'on_sale',
+        'currency',
+        'manufacturer',
+        'shipping_cost',
+        # }}}
+    ))
+    # }}}
+
+
+    ### Required Fields, pls note the VALIDATION_REQUIRED
     # {{{
     source = Field()
     product_number = Field()
