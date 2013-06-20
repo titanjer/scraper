@@ -11,7 +11,7 @@ If you have any question, please contant to @Anfernee Chang
 
 ### Product Database Schema
 
-- Please refer to [Product Database Schema v3.3](https://docs.google.com/file/d/0BwBtbldsfq-3LVh3UTRIVERiVHM/edit?usp=sharing)
+- Please refer to [Product Database Schema v3.4 (last updated 20/06/13)](https://docs.google.com/file/d/0BwBtbldsfq-3LVh3UTRIVERiVHM/edit?usp=sharing)
 - We define the product item in the items.py, please follow it.
 
 ### Notes
