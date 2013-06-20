@@ -13,7 +13,7 @@ If you have any question, please contant to @Anfernee Chang
 - We define the product item in the items.py, please follow it.
 
 ### Validation
-- Please make sure your spider can run and passe the cpi_scrapers/pipelines/validation.py before emailling it to us.
+- Please make sure your spider can run and pass **cpi_scrapers/pipelines/validation.py** before emailling it to us.
 
 ### Notes
 - Please use **'pasre_product'** to be the parsing method for product.
