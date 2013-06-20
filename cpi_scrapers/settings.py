@@ -16,8 +16,12 @@ NEWSPIDER_MODULE = 'cpi_scrapers.spiders'
 
 
 LOG_LEVEL = 'INFO'
+DOWNLOAD_DELAY = 0.25
 
-
+ITEM_PIPELINES = [
+    'cpi_scrapers.pipelines.validation.ProductValidationPipeline',
+]
+ 
 try:
     from local_settings import *
 except ImportError:
