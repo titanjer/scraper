@@ -60,7 +60,7 @@ class DealsDirectSpider(CrawlSpider):
     def parse(self, response):
         ''' ''' # {{{
         hxs = HtmlXPathSelector(response)
-        categories = hxs.select(self.xpaths['parse_categories']).extract();
+        categories = hxs.select(self.xpaths['parse_categories']).extract()
         for category_page in categories:
             category_page = self.store_url + category_page
             yield Request(category_page, callback=self.parse_category, dont_filter=True)
@@ -69,12 +69,12 @@ class DealsDirectSpider(CrawlSpider):
     def parse_category(self, response):
         ''' ''' # {{{
         hxs = HtmlXPathSelector(response)
-        products = hxs.select(self.xpaths['parse_category_products']).extract();
+        products = hxs.select(self.xpaths['parse_category_products']).extract()
         for product in products:
-            product_page = self.store_url + product;
+            product_page = self.store_url + product
             yield Request(product_page, callback = self.parse_product)
 
-        next_page = hxs.select(self.xpaths['parse_category_next']).extract();
+        next_page = hxs.select(self.xpaths['parse_category_next']).extract()
         if next_page:
             next_page = self.store_url + str(next_page[0])
             yield Request(next_page, callback=self.parse_category, dont_filter=True)

@@ -62,8 +62,20 @@ class ProductItem(Item):
         'currency',
         'manufacturer',
         'shipping_cost',
-        # }}}
-    ))
+    )) # }}}
+
+    VALIDATION_NON_REQUIRED = set((
+        # {{{
+        'gtin',
+        'mpn',
+        'product_sku',
+        'product_spec',
+        'cost_price',
+        'num_reviews',
+        'avg_reviews_points',
+        'keywords',
+    )) # }}}
+
     # }}}
 
 

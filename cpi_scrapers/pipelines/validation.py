@@ -18,6 +18,11 @@ class ProductValidationPipeline(object):
             if field not in item:
                 raise DropItem('Missing %s in Item', field)
 
+        # Non-Required Field
+        for field in ProductItem.VALIDATION_NON_REQUIRED:
+            if field not in item:
+                item[field] = None
+
         # Length
         for field, length in ProductItem.VALIDATION_LEN.iteritems():
             tmp = item.get(field)
