@@ -6,7 +6,7 @@ from scrapy import log
 from cpi_scrapers.items import ProductItem
 
 import re
-import json
+import ujson
 
 class DealsDirectSpider(CrawlSpider):
 
@@ -15,13 +15,19 @@ class DealsDirectSpider(CrawlSpider):
     start_urls = [
         store_url,
     ]
+    
+    re_float = re.compile('[-+]?[0-9]*\\.?[0-9]+')
 
     xpaths = {
         # {{{
-        'parse_categories': '//div[@id="mlc"]//li//a/@href',
+        'parse_categories': '//div[@id="mlc"]//ul[@class="cat"]//li//a/@href',
 
+        'parse_category_sub': '//div[@id="mlc"]//ul[@class="sub"]//li//a/@href',
         'parse_category_products': '//div[@class="prod"]//h2[@itemprop]/a/@href',
         'parse_category_next': '//div[@class="pag "]/ul/li[@class="textnav"]/a[@rel="next"]/@href',
+
+        'parse_sub_category_products': '//div[@class="prod"]//h2[@itemprop]/a/@href',
+        'parse_sub_category_next': '//div[@class="pag "]/ul/li[@class="textnav"]/a[@rel="next"]/@href',
 
         'parse_product_product_name': '//span[@itemprop="name"]/text()',
         'parse_product_product_number_deal': '//div[@id="pd_deal"]//input[@name="pID"]/@value',
@@ -60,24 +66,44 @@ class DealsDirectSpider(CrawlSpider):
     def parse(self, response):
         ''' ''' # {{{
         hxs = HtmlXPathSelector(response)
-        categories = hxs.select(self.xpaths['parse_categories']).extract()
+        categories = hxs.select(self.xpaths['parse_categories']).extract();
         for category_page in categories:
             category_page = self.store_url + category_page
-            yield Request(category_page, callback=self.parse_category, dont_filter=True)
+            yield Request(category_page, callback=self.parse_category)
         # }}}
 
     def parse_category(self, response):
         ''' ''' # {{{
         hxs = HtmlXPathSelector(response)
-        products = hxs.select(self.xpaths['parse_category_products']).extract()
+        categories = hxs.select(self.xpaths['parse_category_sub']).extract();
+        for category_page in categories:
+            category_page = self.store_url + category_page
+            yield Request(category_page, callback=self.parse_sub_category)
+
+        products = hxs.select(self.xpaths['parse_category_products']).extract();
         for product in products:
-            product_page = self.store_url + product
+            product_page = self.store_url + product;
             yield Request(product_page, callback = self.parse_product)
 
-        next_page = hxs.select(self.xpaths['parse_category_next']).extract()
+        next_page = hxs.select(self.xpaths['parse_category_next']).extract();
         if next_page:
             next_page = self.store_url + str(next_page[0])
-            yield Request(next_page, callback=self.parse_category, dont_filter=True)
+            yield Request(next_page, callback=self.parse_category)
+
+        # }}}
+
+    def parse_sub_category(self, response):
+        ''' ''' # {{{
+        hxs = HtmlXPathSelector(response)
+        products = hxs.select(self.xpaths['parse_sub_category_products']).extract();
+        for product in products:
+            product_page = self.store_url + product;
+            yield Request(product_page, callback = self.parse_product)
+
+        next_page = hxs.select(self.xpaths['parse_sub_category_next']).extract();
+        if next_page:
+            next_page = self.store_url + str(next_page[0])
+            yield Request(next_page, callback=self.parse_category)
         # }}}
 
     def parse_product(self, response):
@@ -217,11 +243,24 @@ class DealsDirectSpider(CrawlSpider):
         ''' ''' # {{{
 
         item = response.meta['item']
-        sc_list = json.loads(response.body)
+        sc_list = ujson.loads(response.body)
 
-        item['shipping_cost'] = 0 if len(sc_list) < 1 else float(sc_list[0])
+        sc = 0
+        if len(sc_list) >= 1:
+            tmp = sc_list[0]
+            if isinstance(tmp, basestring):
+                tmp = re.sub('<[^<]+?>', '', tmp)
+                tmp = self.re_float.search(tmp)
+                tmp = tmp.group()
 
-        #print item
+                if tmp == '':
+                    raise ValueError('No Shipping cost, %s' % item['product_url'])
+                
+                sc = float(tmp)
+            elif isinstance(tmp, (int, float)):
+                sc = tmp
+
+        item['shipping_cost'] = sc
 
         return item
 

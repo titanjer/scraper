@@ -13,34 +13,80 @@ class ProductValidationPipeline(object):
     def process_item(self, item, spider):
         ''' ''' # {{{
 
-        # Required Fields
+        ## Required Fields
         for field in ProductItem.VALIDATION_REQUIRED:
             if field not in item:
-                raise DropItem('Missing %s in Item', field)
+                raise DropItem('Missing %s in Item' % field)
 
-        # Non-Required Field
+        ## Non-Required Field
         for field in ProductItem.VALIDATION_NON_REQUIRED:
             if field not in item:
                 item[field] = None
 
-        # Length
+        ## check Field Length
+        # {{{
         for field, length in ProductItem.VALIDATION_LEN.iteritems():
             tmp = item.get(field)
-            if tmp and (not isinstance(tmp, basestring) or len(tmp) > length):
-                raise DropItem('Wrong string format: %s | "%s"', field, tmp)
+            if tmp:
+                if isinstance(tmp, basestring):
+                    tmp = tmp.strip()
+                    if len(tmp) > length:
+                        raise DropItem('Wrong string format: %s | "%s"' % (field, tmp))
+                    item[field] = tmp
+                else:
+                    raise DropItem('Not string: %s | "%s"' % (field, tmp))
+        # }}}            
         
-        # product condition
+        ## Category Name
+        # {{{
+        tmp_cgps = []
+        for cgp in item['category_name'].split(ProductItem.CG_PATHS_SEP):
+            tmp_cgp = []
+            for cg in cgp.split(ProductItem.CG_PATH_SEP):
+                cg = cg.strip()
+                if cg != '':
+                    tmp_cgp.append(cg)
+            tmp = ProductItem.CG_PATH_SEP.join(tmp_cgp)
+            if tmp != '':
+                tmp_cgps.append(tmp)
+
+        tmp = ProductItem.CG_PATHS_SEP.join(tmp_cgps)
+        if tmp != item['category_name']:
+            raise Dropitem('Wrong format for category_name, %s' % item['category_name'])
+        # }}}
+
+        ## product condition
         tmp = item['product_condition'] 
         if not (0 < tmp <= ProductItem.NUM_PC_OPTS):
             raise DropItem('Wrong Product Condition')
         
+        ## Availability
         tmp = item['availability'] 
         if not (0 < tmp <= ProductItem.NUM_AVAIL_OPTS):
             raise DropItem('Wrong Availability')
 
+        ## On Sale
         if item['on_sale'] not in (0, 1):
             raise DropItem('Wrong On Sale')
-    
+
+        ## Shipping cost and its flag
+        # {{{
+        if item['shipping_cost'] < 0:
+            item['shipping_cost'] = 0
+            item['no_shipping_cost'] = 1
+        else:
+            item['no_shipping_cost'] = 0
+        # }}}
+
+        ## sale_price and its flag
+        # {{{
+        if item['sale_price'] < 0:
+            item['sale_price'] = 0
+            item['no_sale_price'] = 1
+        else:
+            item['no_sale_price'] = 0
+        # }}}
+
         return item
         
         # }}}

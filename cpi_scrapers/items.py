@@ -116,5 +116,14 @@ class ProductItem(Item):
 
     # }}}
 
+    no_sale_price = Field()
+    no_shipping_cost = Field()
+
+    #hash_value = Field()
+    #version = Field() 
+    #id = Field()  
+    #crawl_date = Field()
+    store_id = Field()
+
     # }}}
 
