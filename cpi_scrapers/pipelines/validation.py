@@ -55,7 +55,7 @@ class ProductValidationPipeline(object):
             raise Dropitem('Wrong format for category_name, %s' % item['category_name'])
         # }}}
 
-        ## product condition
+        ## Product condition
         tmp = item['product_condition'] 
         if not (0 < tmp <= ProductItem.NUM_PC_OPTS):
             raise DropItem('Wrong Product Condition')
@@ -69,22 +69,30 @@ class ProductValidationPipeline(object):
         if item['on_sale'] not in (0, 1):
             raise DropItem('Wrong On Sale')
 
-        ## Shipping cost and its flag
+        ## Sale_price and its flag
         # {{{
-        if item['shipping_cost'] < 0:
-            item['shipping_cost'] = 0
-            item['no_shipping_cost'] = 1
-        else:
-            item['no_shipping_cost'] = 0
-        # }}}
+        tmp = item['sale_price']
+        if not isinstance(tmp, (int, float, long)):
+            raise DropItem('Wong type for sale_price')
 
-        ## sale_price and its flag
-        # {{{
-        if item['sale_price'] < 0:
+        if tmp < 0:
             item['sale_price'] = 0
             item['no_sale_price'] = 1
         else:
             item['no_sale_price'] = 0
+        # }}}
+
+        ## Shipping cost and its flag
+        # {{{
+        tmp = item['shipping_cost']
+        if not isinstance(tmp, (int, float, long)):
+            raise DropItem('Wong type for shipping_cost')
+
+        if tmp < 0:
+            item['shipping_cost'] = 0
+            item['no_shipping_cost'] = 1
+        else:
+            item['no_shipping_cost'] = 0
         # }}}
 
         return item
