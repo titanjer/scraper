@@ -37,7 +37,7 @@ class ProductItem(Item):
         'source': 128,
         'product_number': 128,
         'product_name': 512,
-        'category_name': 512,
+        'category_name': 2048,
         'product_url': 2048,
         'image_url': 2048,
         'currency': 32,

@@ -33,6 +33,7 @@ class DealsDirectSpider(CrawlSpider):
         'parse_product_product_number_deal': '//div[@id="pd_deal"]//input[@name="pID"]/@value',
         'parse_product_product_number_img': '//div[@id="pd_img"]//input[@name="pID"]/@value',
         'parse_product_product_number_img_add2wl': '//span[@class="add2wl"]/@onclick',
+        'parse_product_product_number_share': '//div[@id="pd_deal"]//li[@class="email"]/a/@href',
         'parse_product_description': '//div[@id="pd_desc"]//text()',
         'parse_product_categories': '//div[@id="pd_bcr"]/ul//li/*/text()',
         'parse_product_image_url': '//img[@id="pd_imgtag"]/@src',
@@ -135,12 +136,21 @@ class DealsDirectSpider(CrawlSpider):
             if len(tmp) == 0:
                 tmp = self.extract_xpath(hxs, 'parse_product_product_number_img_add2wl') # Out of Stock and No Image
                 if len(tmp) == 0:
-                    raise ValueError('No Product Number')
-                re_add2wl = re.compile('pid=(\d+)')
-                ms = re_add2wl.search(tmp[0])
-                tmp = ms.groups()
-                if len(tmp) == 0:
-                    raise ValueError('No Product Number')
+                    tmp = self.extract_xpath(hxs, 'parse_product_product_number_share') # Out of Stock, No Image and no Add2wl
+                    if len(tmp) == 0:
+                        raise ValueError('No Product Number')
+
+                    re_share = re.compile('m=tell&p=(\d+)') 
+                    ms = re_share.search(tmp[0])
+                    tmp = ms.groups()
+                    if len(tmp) == 0:
+                        raise ValueError('No Product Number')
+                else:
+                    re_add2wl = re.compile('pid=(\d+)')
+                    ms = re_add2wl.search(tmp[0])
+                    tmp = ms.groups()
+                    if len(tmp) == 0:
+                        raise ValueError('No Product Number')
 
         item['product_number'] = tmp[0]
         # }}}
@@ -232,7 +242,7 @@ class DealsDirectSpider(CrawlSpider):
         
         # Shipping Cost 
         # Generate a Request to get the Shipping Cost
-        request = Request(self.SC_URL % (item['product_number']), callback=self.parse_shipping_cost)
+        request = Request(self.SC_URL % (item['product_number']), callback=self.parse_shipping_cost, dont_filter=True)
         request.meta['item'] = item
 
         return request
@@ -262,6 +272,6 @@ class DealsDirectSpider(CrawlSpider):
 
         item['shipping_cost'] = sc
 
-        return item
+        yield item
 
         # }}}

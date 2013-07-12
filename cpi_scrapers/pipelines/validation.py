@@ -25,18 +25,26 @@ class ProductValidationPipeline(object):
 
         ## check Field Length
         # {{{
-        for field, length in ProductItem.VALIDATION_LEN.iteritems():
+        for field, length in ProductItem.VALIDATION_LEN.items():
             tmp = item.get(field)
-            if tmp:
-                if isinstance(tmp, basestring):
-                    tmp = tmp.strip()
-                    if len(tmp) > length:
-                        raise DropItem('Wrong string format: %s | "%s"' % (field, tmp))
-                    item[field] = tmp
-                else:
-                    raise DropItem('Not string: %s | "%s"' % (field, tmp))
+            if tmp is None:
+                item[field] = ""
+                continue
+
+            if isinstance(tmp, basestring):
+                #print 'Check Field Length: (%s, %s, %s, "%s")' % (field, length, len(tmp), tmp)
+                tmp = tmp.strip()
+                if len(tmp) > length:
+                    raise DropItem('Wrong string format: %s | "%s"' % (field, tmp))
+                item[field] = tmp
+            else:
+                raise DropItem('Not string: %s | "%s"' % (field, tmp))
         # }}}            
         
+        ## Product Name
+        if item['product_name'] == '':
+            raise DropItem("Wrong Product Name! It's blank!")
+
         ## Category Name
         # {{{
         tmp_cgps = []
@@ -52,7 +60,7 @@ class ProductValidationPipeline(object):
 
         tmp = ProductItem.CG_PATHS_SEP.join(tmp_cgps)
         if tmp != item['category_name']:
-            raise Dropitem('Wrong format for category_name, %s' % item['category_name'])
+            raise DropItem('Wrong format for category_name, %s' % item['category_name'])
         # }}}
 
         ## Product condition
@@ -73,7 +81,7 @@ class ProductValidationPipeline(object):
         # {{{
         tmp = item['sale_price']
         if not isinstance(tmp, (int, float, long)):
-            raise DropItem('Wong type for sale_price')
+            raise DropItem('Wrong type for sale_price')
 
         if tmp < 0:
             item['sale_price'] = 0
@@ -86,7 +94,7 @@ class ProductValidationPipeline(object):
         # {{{
         tmp = item['shipping_cost']
         if not isinstance(tmp, (int, float, long)):
-            raise DropItem('Wong type for shipping_cost')
+            raise DropItem('Wrong type for shipping_cost')
 
         if tmp < 0:
             item['shipping_cost'] = 0
