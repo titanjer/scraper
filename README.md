@@ -14,10 +14,10 @@ If you have any question, please contant to @Anfernee Chang
 
 ### Validation
 - Please run your spider and pass **cpi_scrapers/pipelines/validation.py** before emailling it to us.
-- Please make sure the spider doesn't raise any errors with **scrapy crawl spider** before sending it.
+- Please make sure the spider doesn't raise any errors with **'scrapy crawl spider'** before sending it.
 
 ### Notes
-- Please use **'pasre_product'** to be the parsing method for **A** product and pass no **meta** in if you can.
+- Please use **'pasre_product'** to be the parsing method for **A** product and pass **no meta** in if you can.
 - Please add node's XPath in the spider class variable **'xpaths'** dict. We will use these information to check your spider.
 - Please raises ValueError if the page have no data for the XPath to any **Required Fields**.
 - Please use **'copy.deepcopy'** or **'new ProductItem()'** to re-generate a item for each different product variation.
