@@ -3,7 +3,7 @@ scraper
    
 If you have any question, please contant to @Anfernee Chang
    
-  - GTalk: innovotech.hr@gmail.com
+  - GTalk: anfernee@getpentagon.com.au
   - Skype: anfernee-chang
 
 
