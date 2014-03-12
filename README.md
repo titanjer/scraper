@@ -1,4 +1,4 @@
-cpi_scrapers
+scraper
 ============
    
 If you have any question, please contant to @Anfernee Chang
@@ -13,13 +13,14 @@ If you have any question, please contant to @Anfernee Chang
 - We define the product item in the items.py, please follow it.
 
 ### Validation
-- Please run your spider and pass **cpi_scrapers/pipelines/validation.py** before emailling it to us.
+- Please run your spider and pass **scraper/pipelines/validation.py** before emailling it to us.
 - Please make sure the spider doesn't raise any errors with **'scrapy crawl spider'** before sending it.
 
 ### Notes
-- Please use **'pasre_product'** to be the parsing method for **A** product and pass **no meta** in if you can.
-- Please add node's XPath in the spider class variable **'xpaths'** dict. We will use these information to check your spider.
-- Please raises ValueError if the page have no data for the XPath to any **Required Fields**.
-- Please use **'copy.deepcopy'** or **'new ProductItem()'** to re-generate a item for each different product variation.
-- Since we use Duplicate Filter to save the carwled url, please use **'dont_filter'** carefully.
-- To complete the job, we'd only be requiring the **spiders/store.py** file from you. Please send it by email.
+1. Please follow **PEP8** style. 
+1. Please use **'pasre_product'** to be the parsing method for **A** product and pass **no meta** in if you can.
+1. Please add node's XPath in the spider class variable **'xpaths'** dict. We will use these information to check your spider.
+1. Please raises ValueError('XXX!') if the page have no data for the XPath to any **Required Fields**.
+1. Please use **'copy.deepcopy'** or **'new ProductItem()'** to re-generate a item for each different product variation(colors etc.).
+1. Since we use Duplicate Filter to save the carwled url, please use **'dont_filter'** carefully.
+1. To complete the job, we'd only be requiring the **spiders/store.py** file from you. Please send it by email.

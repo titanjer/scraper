@@ -1,4 +1,4 @@
-# Scrapy settings for cpi_scrapers project
+# Scrapy settings for scraper project
 #
 # For simplicity, this file contains only the most important settings by
 # default. All the other settings are documented here:
@@ -6,20 +6,20 @@
 #     http://doc.scrapy.org/topics/settings.html
 #
 
-BOT_NAME = 'cpi_scrapers'
+BOT_NAME = 'scraper'
 
-SPIDER_MODULES = ['cpi_scrapers.spiders']
-NEWSPIDER_MODULE = 'cpi_scrapers.spiders'
+SPIDER_MODULES = ['scraper.spiders']
+NEWSPIDER_MODULE = 'scraper.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'cpi_scrapers (+http://www.yourdomain.com)'
+#USER_AGENT = 'scraper (+http://www.yourdomain.com)'
 
 
 LOG_LEVEL = 'INFO'
-DOWNLOAD_DELAY = 0.25
+DOWNLOAD_DELAY = 1
 
 ITEM_PIPELINES = [
-    'cpi_scrapers.pipelines.validation.ProductValidationPipeline',
+    'scraper.pipelines.validation.ProductValidationPipeline',
 ]
  
 try:

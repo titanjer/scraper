@@ -2,7 +2,7 @@ from scrapy.contrib.spiders import CSVFeedSpider
 from scrapy.exceptions import CloseSpider
 from scrapy import log
 
-from cpi_scrapers.items import ProductItem
+from scraper.items import ProductItem
 
 import re
 

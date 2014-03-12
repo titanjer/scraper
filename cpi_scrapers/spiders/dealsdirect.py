@@ -3,7 +3,7 @@ from scrapy.http import Request
 from scrapy.contrib.spiders import CrawlSpider
 from scrapy import log
 
-from cpi_scrapers.items import ProductItem
+from scraper.items import ProductItem
 
 import re
 import ujson

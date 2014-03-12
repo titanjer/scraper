@@ -5,7 +5,7 @@
 
 from scrapy.exceptions import DropItem
 
-from cpi_scrapers.items import ProductItem
+from scraper.items import ProductItem
 
 
 class ProductValidationPipeline(object):
