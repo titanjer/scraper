@@ -13,8 +13,9 @@ If you have any question, please contant to @Anfernee Chang
 - We define the product item in the items.py, please follow it.
 
 ### Validation
-- Please run your spider and pass **scraper/pipelines/validation.py** before emailling it to us.
+- Please run your spider and make sure it passes **scraper/pipelines/validation.py** before sending it.
 - Please make sure the spider doesn't raise any errors with **'scrapy crawl spider'** before sending it.
+- Any spiders sent without checking will result in ** penalties! **
 
 ### Notes
 1. Please follow **PEP8** style. 
