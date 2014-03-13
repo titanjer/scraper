@@ -1,7 +1,7 @@
-scraper
+Crawler Instructions
 ============
    
-If you have any question, please contant to @Anfernee Chang
+If you have any questions, please contact @Anfernee Chang
    
   - GTalk: anfernee@getpentagon.com.au
   - Skype: anfernee-chang
@@ -9,7 +9,7 @@ If you have any question, please contant to @Anfernee Chang
 
 ### Product Database Schema
 
-- Must read carefully - [Product Database Schema v3.5 (last updated 02/07/13)](https://docs.google.com/file/d/0BwBtbldsfq-3LVh3UTRIVERiVHM/edit?usp=sharing)
+- You MUST read carefully - [Product Database Schema v3.5 (last updated 02/07/13)](https://docs.google.com/file/d/0BwBtbldsfq-3LVh3UTRIVERiVHM/edit?usp=sharing)
 - We define the product item in the items.py, please follow it.
 
 ### Validation
