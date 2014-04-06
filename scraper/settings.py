@@ -18,7 +18,7 @@ LOG_LEVEL = 'INFO'
 DOWNLOAD_DELAY = 1
 
 ### Redis Pipeline
-REDIS_HOST = '192.168.1.100'
+REDIS_HOST = '10.8.0.1'
 REDIS_PORT = 6379
 REDIS_DB = 0
 
@@ -28,7 +28,10 @@ ITEM_PIPELINES = [
 ]
  
 ### Sentry
-# TODO
+SENTRY_DSN = 'http://public:secret@example.com/1'
+EXTENSIONS = {
+    "scrapy_sentry.extensions.Errors":10,
+}
 
 
 ### Local Settings
