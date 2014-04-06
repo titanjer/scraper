@@ -7,6 +7,7 @@ from scraper.items import ProductItem
 
 import rq
 import redis
+import time
 
 
 class AddItemPipeline(object):
@@ -47,7 +48,7 @@ class AddItemPipeline(object):
         ## assign queue parameters
         item['store_id'] = store_id
         callback = 'worker.save_product_to_db'
-        event = self.encoder.encode(dict(queue=self.queue_name, value=item))
+        event = self.encoder.encode(dict(queue=self.queue_name, value=item, time=time.time()))
 
         ## push item to redis queue
         self.queue.enqueue(callback, event)
