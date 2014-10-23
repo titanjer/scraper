@@ -16,7 +16,7 @@ raven==4.1.1
 redis==2.9.1
 rq==0.3.13
 scrapy-sentry==0.6.1
-scrapy-webdriver==0.2
+-e git+https://github.com/brandicted/scrapy-webdriver#egg=scrapy-webdriver
 selenium==2.42.1
 six==1.7.2
 times==0.6.2
