@@ -25,3 +25,6 @@ If you have any questions, please contact @Anfernee Chang
 1. Please use **'copy.deepcopy'** or **'new ProductItem()'** to re-generate a item for each different product variation(colors etc.).
 1. Since we use Duplicate Filter to save the carwled url, please use **'dont_filter'** carefully.
 1. To complete the job, we'd only be requiring the **spiders/store.py** file from you. Please send it by email.
+
+### Running Your Test Crawlers
+https://github.com/titanjer/scraper/wiki/Testing
