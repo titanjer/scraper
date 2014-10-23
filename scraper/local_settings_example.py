@@ -1,11 +1,9 @@
 
 # Redis Queue
-QUEUE_BASE = 'default'
-QUEUES = [QUEUE_BASE, ]
-
+RQ_QUEUE = 'scraper'
 
 # Proxy
-PROXY_URL = 'http://10.8.0.1:8118'
+PROXY_URL = 'http://localhost:8118'
 PROXY_AUTH = ''  # "USERNAME:PASSWORD"
 
 DOWNLOADER_MIDDLEWARES = {
@@ -33,7 +31,7 @@ WEBDRIVER_OPTIONS = {
         '--load-images=false',
         '--webdriver-loglevel=info',
         '--ssl-protocol=any',
-        '--proxy=10.8.0.1:8118',
+        '--proxy=localhost:8118',
         '--proxy-type=http',
     ]
 }
