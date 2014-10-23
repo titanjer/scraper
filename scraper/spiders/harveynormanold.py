@@ -10,9 +10,9 @@ from time import sleep
 import ujson as json
 from scrapy import log
 
-class HarveynormanSpider(CrawlSpider):
+class HarveynormanoldSpider(CrawlSpider):
 
-    name = "harveynorman"
+    name = "harveynormanold"
     store_url = "http://www.harveynorman.com.au/"
     start_urls = [
         store_url
@@ -361,7 +361,7 @@ class HarveynormanSpider(CrawlSpider):
                 else:
                     yield item
         # }}}
-    
+
     def parse_shipping_cost(self, response):
         # {{{
         data = json.loads(response.body)

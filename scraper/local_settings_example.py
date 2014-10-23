@@ -1,8 +1,39 @@
 
-# Sentry DSN
-SENTRY_DSN = "http://70010b884a9e4ae7a8ad3e2c29b5da33:d91efd8da9d74f55a9923ac93c6be811@10.8.0.1:9000/2"
-
-
 # Redis Queue
 QUEUE_BASE = 'default'
 QUEUES = [QUEUE_BASE, ]
+
+
+# Proxy
+PROXY_URL = 'http://10.8.0.1:8118'
+PROXY_AUTH = ''  # "USERNAME:PASSWORD"
+
+DOWNLOADER_MIDDLEWARES = {
+    'scraper.middlewares.ProxyMiddleware': 100,
+    'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': 110,
+}
+
+
+# webdriver
+DOWNLOAD_HANDLERS = {
+    'http': 'scrapy_webdriver.download.WebdriverDownloadHandler',
+    'https': 'scrapy_webdriver.download.WebdriverDownloadHandler',
+}
+
+SPIDER_MIDDLEWARES = {
+    'scrapy_webdriver.middlewares.WebdriverSpiderMiddleware': 543,
+}
+
+WEBDRIVER_BROWSER = 'PhantomJS'
+
+# Optional passing of parameters to the webdriver
+WEBDRIVER_OPTIONS = {
+    'service_args': [
+        '--debug=false',
+        '--load-images=false',
+        '--webdriver-loglevel=info',
+        '--ssl-protocol=any',
+        '--proxy=10.8.0.1:8118',
+        '--proxy-type=http',
+    ]
+}

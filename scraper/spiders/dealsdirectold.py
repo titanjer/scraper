@@ -8,14 +8,14 @@ from scraper.items import ProductItem
 import re
 import ujson
 
-class DealsDirectSpider(CrawlSpider):
+class DealsDirectOldSpider(CrawlSpider):
 
-    name = "dealsdirect"
+    name = "dealsdirectold"
     store_url = "http://www.dealsdirect.com.au"
     start_urls = [
         store_url,
     ]
-    
+
     re_float = re.compile('[-+]?[0-9]*\\.?[0-9]+')
 
     xpaths = {
@@ -41,7 +41,7 @@ class DealsDirectSpider(CrawlSpider):
         'parse_product_sale_price': '//span[@itemprop="price"]//text()',
         'parse_product_on_sale_save': '//div[@class="midcart_widget"]//li[@class="save"]',
         'parse_product_on_sale_img': '//div[@id="pd_img"]//div[contains(@class, "nl-promo")]',
- 
+
         # }}}
     }
 
@@ -108,7 +108,7 @@ class DealsDirectSpider(CrawlSpider):
         # }}}
 
     def parse_product(self, response):
-        ''' ''' # {{{ 
+        ''' ''' # {{{
         #self.log(response.url, level=log.INFO)
 
         if response.url == self.store_url + '/':
@@ -140,7 +140,7 @@ class DealsDirectSpider(CrawlSpider):
                     if len(tmp) == 0:
                         raise ValueError('No Product Number')
 
-                    re_share = re.compile('m=tell&p=(\d+)') 
+                    re_share = re.compile('m=tell&p=(\d+)')
                     ms = re_share.search(tmp[0])
                     tmp = ms.groups()
                     if len(tmp) == 0:
@@ -157,10 +157,10 @@ class DealsDirectSpider(CrawlSpider):
 
         # Description
         # {{{
-        tmp = self.extract_xpath(hxs, 'parse_product_description') 
+        tmp = self.extract_xpath(hxs, 'parse_product_description')
         if len(tmp) is 0:
             raise ValueError('No Description')
-        else:    
+        else:
             item['description'] = '\n'.join(map(lambda s: s.strip(), tmp)).strip()
         # }}}
 
@@ -208,16 +208,16 @@ class DealsDirectSpider(CrawlSpider):
             raise ValueError('No Availability')
         else:
             tmp = self.AVAIL_CHOICES.get(re.sub('\s+', '', tmp[0].lower()))
-            if not tmp: 
+            if not tmp:
                 raise ValueError('No such Availability')
             item['availability'] = tmp
-        
-        # Sale Price 
+
+        # Sale Price
         tmp = self.extract_xpath(hxs, 'parse_product_sale_price')
         tmp = re.sub('[$|\s]', '', ''.join(tmp))
         item['sale_price'] = float(tmp)
 
-        # On Sale 
+        # On Sale
         item['on_sale'] = 0
         if len(self.extract_xpath(hxs, 'parse_product_on_sale_img')) > 0 or len(self.extract_xpath(hxs, 'parse_product_on_sale_save')) > 0:
             item['on_sale'] = 1
@@ -239,14 +239,14 @@ class DealsDirectSpider(CrawlSpider):
         #item['avg_reviews_points'] = None
         #item['keywords'] = None
         # }}}
-        
-        # Shipping Cost 
+
+        # Shipping Cost
         # Generate a Request to get the Shipping Cost
         request = Request(self.SC_URL % (item['product_number']), callback=self.parse_shipping_cost, dont_filter=True)
         request.meta['item'] = item
 
         return request
-    
+
         # }}}
 
     def parse_shipping_cost(self, response):
@@ -265,7 +265,7 @@ class DealsDirectSpider(CrawlSpider):
 
                 if tmp == '':
                     raise ValueError('No Shipping cost, %s' % item['product_url'])
-                
+
                 sc = float(tmp)
             elif isinstance(tmp, (int, float)):
                 sc = tmp

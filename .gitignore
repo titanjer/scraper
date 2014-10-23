@@ -1,4 +1,5 @@
 *.py[cod]
+.DS_Store
 
 # C extensions
 *.so
@@ -39,3 +40,4 @@ venv
 *~
 local_settings.py
 setup.py
+ghostdriver.log
