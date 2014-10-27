@@ -24,6 +24,8 @@ ITEM_PIPELINES = [
     'scraper.pipelines.items_rq.AddItemPipeline',
 ]
 
+COOKIES_ENABLED = True
+
 
 # Redis Pipeline
 REDIS_HOST = '10.8.0.1'
