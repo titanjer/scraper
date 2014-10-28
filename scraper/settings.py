@@ -21,7 +21,6 @@ DOWNLOAD_DELAY = 1
 
 ITEM_PIPELINES = [
     'scraper.pipelines.validation.ProductValidationPipeline',
-    'scraper.pipelines.items_rq.AddItemPipeline',
 ]
 
 COOKIES_ENABLED = True
