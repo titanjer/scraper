@@ -11,6 +11,10 @@ DOWNLOADER_MIDDLEWARES = {
     'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': 110,
 }
 
+ITEM_PIPELINES = [
+    'scraper.pipelines.validation.ProductValidationPipeline',
+    'scraper.pipelines.item_rq.AddItemPipeline',
+]
 
 # webdriver
 DOWNLOAD_HANDLERS = {
