@@ -13,7 +13,7 @@ DOWNLOADER_MIDDLEWARES = {
 
 ITEM_PIPELINES = [
     'scraper.pipelines.validation.ProductValidationPipeline',
-    'scraper.pipelines.item_rq.AddItemPipeline',
+    'scraper.pipelines.items_rq.AddItemPipeline',
 ]
 
 # webdriver
