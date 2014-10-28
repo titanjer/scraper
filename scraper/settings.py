@@ -34,6 +34,6 @@ REDIS_DB = 0
 
 # Local Settings
 try:
-    from local_settings import *
+    from scrapyd_settings import *
 except ImportError:
     pass
