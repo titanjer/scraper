@@ -1,6 +1,16 @@
 
+# scraper specific item pipelines
+# 1. product validation
+# 2. push product to queue
+ITEM_PIPELINES = [
+    'scraper.pipelines.validation.ProductValidationPipeline',
+    'scraper.pipelines.items_rq.AddItemPipeline',
+]
+
+
 # Redis Queue
 RQ_QUEUE = 'scraper'
+
 
 # Proxy
 PROXY_URL = 'http://localhost:8118'
@@ -11,10 +21,9 @@ DOWNLOADER_MIDDLEWARES = {
     'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': 110,
 }
 
-ITEM_PIPELINES = [
-    'scraper.pipelines.validation.ProductValidationPipeline',
-    'scraper.pipelines.items_rq.AddItemPipeline',
-]
+
+# Retry middlewares settings, 524 is for CloudFlare
+RETRY_HTTP_CODES = [500, 502, 503, 504, 400, 408, 524]
 
 # webdriver
 DOWNLOAD_HANDLERS = {
@@ -28,7 +37,6 @@ SPIDER_MIDDLEWARES = {
 
 WEBDRIVER_BROWSER = 'PhantomJS'
 
-# Optional passing of parameters to the webdriver
 WEBDRIVER_OPTIONS = {
     'service_args': [
         '--debug=false',
