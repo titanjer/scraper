@@ -32,8 +32,14 @@ REDIS_PORT = 6379
 REDIS_DB = 0
 
 
-# Local Settings
+# Scrapyd Settings
 try:
     from scrapyd_settings import *
+except ImportError:
+    pass
+
+# Local Settings
+try:
+    from local_settings import *
 except ImportError:
     pass
