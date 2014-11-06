@@ -1,26 +1,27 @@
-Scrapy==0.24.1
-Twisted==14.0.0
+Scrapy==0.24.4
+Twisted==14.0.2
 argparse==1.2.1
-cffi==0.8.2
-cryptography==0.4
+cffi==0.8.6
+cryptography==0.6.1
 cssselect==0.9.1
+distribute==0.6.27
 gnureadline==6.2.5
 ipython==2.0.0
-lxml==3.3.5
+lxml==3.4.0
 pyOpenSSL==0.14
 pycparser==2.10
 python-dateutil==2.2
 pytz==2014.2
-queuelib==1.1.1
+queuelib==1.2.2
 raven==4.1.1
 redis==2.9.1
 rq==0.3.13
 scrapy-sentry==0.6.1
--e git+https://github.com/brandicted/scrapy-webdriver#egg=scrapy-webdriver
+-e git+https://github.com/titanjer/scrapy-webdriver@514c387a179d841a614e0ab446bfa95142e4baba#egg=scrapy_webdriver-origin/download_handler_wrapper
 selenium==2.42.1
-six==1.7.2
+six==1.8.0
 times==0.6.2
 ujson==1.33
-w3lib==1.6
+w3lib==1.10.0
 wsgiref==0.1.2
 zope.interface==4.1.1
