@@ -17,7 +17,7 @@ raven==4.1.1
 redis==2.9.1
 rq==0.3.13
 scrapy-sentry==0.6.1
--e git+https://github.com/titanjer/scrapy-webdriver@514c387a179d841a614e0ab446bfa95142e4baba#egg=scrapy_webdriver-origin/download_handler_wrapper
+-e git+https://github.com/titanjer/scrapy-webdriver@download_handler_wrapper#egg=scrapy_webdriver
 selenium==2.42.1
 six==1.8.0
 times==0.6.2
@@ -25,3 +25,4 @@ ujson==1.33
 w3lib==1.10.0
 wsgiref==0.1.2
 zope.interface==4.1.1
+ScrapyGraphite

@@ -45,7 +45,9 @@ WEBDRIVER_OPTIONS = {
         '--load-images=false',
         '--webdriver-loglevel=info',
         '--ssl-protocol=any',
-        '--proxy=localhost:8118',
+        '--proxy=http://titanlin:titanlin@localhost:3128',
+        '--proxy-auth=titanlin:titanlin',
         '--proxy-type=http',
-    ]
+    ],
+    'service_log_path': '/tmp/ghostdriver.log',
 }
