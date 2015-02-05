@@ -5,6 +5,12 @@
 #
 #     http://doc.scrapy.org/topics/settings.html
 #
+import os
+import sys
+
+from utils.env import read_variable, load_env_variables
+
+ROOT = os.path.dirname(os.path.realpath(__name__))
 
 BOT_NAME = 'scraper'
 
@@ -32,12 +38,18 @@ REDIS_PORT = 6379
 REDIS_DB = 0
 
 
-# Scrapyd Settings
-try:
-    from scrapyd_settings import *
-except ImportError:
-    pass
-
+env_variables = load_env_variables()
+if read_variable('HOST', default='scrapyd') == 'local':
+    module = sys.modules[__name__]
+    for name, value in env_variables.iteritems():
+        setattr(module, name, value)
+    print("Local env: {}".format(env_variables))
+else:
+    # Scrapyd Settings
+    try:
+        from scrapyd_settings import *
+    except ImportError:
+        pass
 # Local Settings
 try:
     from local_settings import *
