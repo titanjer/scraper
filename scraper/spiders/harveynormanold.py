@@ -1,3 +1,4 @@
+# pylint: skip-file
 from scrapy.selector import HtmlXPathSelector
 from scrapy.http import Request, FormRequest
 from scrapy.contrib.spiders import CrawlSpider

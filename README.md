@@ -50,3 +50,7 @@ HOST=local
 LOG_LEVEL='INFO'
 HTTPCACHE_ENABLED=True
 ```
+
+### Pyling & PEP8 checkers
+
+You can check if you code can pass pylint and pep8 checkers.
