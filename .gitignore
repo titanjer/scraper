@@ -36,9 +36,12 @@ nosetests.xml
 .pydevproject
 
 # Misc
+.scrapy
+.env
 venv
 *~
 local_settings.py
 setup.py
 ghostdriver.log
 scrapyd_settings.py
+babykingdom.py
