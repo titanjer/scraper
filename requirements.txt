@@ -26,3 +26,7 @@ w3lib==1.10.0
 wsgiref==0.1.2
 zope.interface==4.1.1
 ScrapyGraphite
+
+# linters
+pylint
+pep8
