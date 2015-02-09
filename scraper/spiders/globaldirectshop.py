@@ -1,3 +1,4 @@
+# pylint: skip-file
 from scrapy.contrib.spiders import CSVFeedSpider
 from scrapy.exceptions import CloseSpider
 from scrapy import log
@@ -20,18 +21,18 @@ AVAIL_CHOICES = {
 def convert_availability(v):
     # {{{
     tmp = AVAIL_CHOICES.get(re.sub('\s+', '', v.lower()))
-    if not tmp: 
+    if not tmp:
         raise ValueError('No such Availability: %s' % v)
     return tmp
-    # }}}    
+    # }}}
 
 
 class GlobaldirectshopSpider(CSVFeedSpider):
     name = 'globaldirectshop'
     start_urls = ['http://cpi-feeds.appspot.com/store/6323566249246720/', ]
-    
+
     source = 'http://www.globaldirectshop.com.au/'
-     
+
     headers = ['pid', 'sku', 'category', 'name', 'produrl', 'availability', 'price', 'picurl']
     delimiter = ','
 
@@ -55,14 +56,14 @@ class GlobaldirectshopSpider(CSVFeedSpider):
 
         if not body.startswith(header):
             raise CloseSpider('response body dose not start by header\n%s\n%s' % (body[len(header)+10], header))
-        
+
         response = response.replace(body=body[len(header):].strip())
         return response
 
     def parse_row(self, response, row):
         # {{{
         item = ProductItem()
-        
+
         for field in ProductItem.VALIDATION_REQUIRED:
             item[field] = ''
 
@@ -75,7 +76,7 @@ class GlobaldirectshopSpider(CSVFeedSpider):
         for field in self.fields:
             func = field[2]
             item[field[1]] = func(row[field[0]]) if func else row[field[0]]
-        
+
         return item
         # }}}
 
